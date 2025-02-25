@@ -160,11 +160,11 @@ Training instructions can be found in this [folder](./train).
 
 ## Citation
 ```
-@article{
-  tan2024omini,
-  title={OminiControl: Minimal and Universal Control for Diffusion Transformer},
-  author={Zhenxiong Tan, Songhua Liu, Xingyi Yang, Qiaochu Xue, and Xinchao Wang},
+@article{tan2024ominicontrol,
+  title={Ominicontrol: Minimal and universal control for diffusion transformer},
+  author={Tan, Zhenxiong and Liu, Songhua and Yang, Xingyi and Xue, Qiaochu and Wang, Xinchao},
   journal={arXiv preprint arXiv:2411.15098},
+  volume={3},
   year={2024}
 }
 ```
