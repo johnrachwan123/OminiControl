@@ -28,6 +28,7 @@ class Condition(object):
         condition: Union[Image.Image, torch.Tensor] = None,
         mask=None,
         position_delta=None,
+        position_scale=1.0,
     ) -> None:
         self.condition_type = condition_type
         assert raw_img is not None or condition is not None
@@ -36,6 +37,7 @@ class Condition(object):
         else:
             self.condition = condition
         self.position_delta = position_delta
+        self.position_scale = position_scale
         # TODO: Add mask support
         assert mask is None, "Mask not supported yet"
 
@@ -105,7 +107,7 @@ class Condition(object):
             "depth_pred",
             "fill",
             "sr",
-            "cartoon"
+            "cartoon",
         ]:
             tokens, ids = encode_images(pipe, self.condition)
         else:
@@ -117,5 +119,11 @@ class Condition(object):
         if self.position_delta is not None:
             ids[:, 1] += self.position_delta[0]
             ids[:, 2] += self.position_delta[1]
+        if self.position_scale != 1.0:
+            scale_bias = (self.position_scale - 1.0) / 2
+            ids[:, 1] *= self.position_scale
+            ids[:, 2] *= self.position_scale
+            ids[:, 1] += scale_bias
+            ids[:, 2] += scale_bias
         type_id = torch.ones_like(ids[:, :1]) * self.type_id
         return tokens, ids, type_id

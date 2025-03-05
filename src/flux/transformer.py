@@ -3,11 +3,11 @@ from diffusers.pipelines import FluxPipeline
 from typing import List, Union, Optional, Dict, Any, Callable
 from .block import block_forward, single_block_forward
 from .lora_controller import enable_lora
+from accelerate.utils import is_torch_version
 from diffusers.models.transformers.transformer_flux import (
     FluxTransformer2DModel,
     Transformer2DModelOutput,
     USE_PEFT_BACKEND,
-    is_torch_version,
     scale_lora_layers,
     unscale_lora_layers,
     logger,

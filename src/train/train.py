@@ -7,11 +7,7 @@ import time
 
 from datasets import load_dataset
 
-from .data import (
-    ImageConditionDataset,
-    Subject200KDataset,
-    CartoonDataset
-)
+from .data import ImageConditionDataset, Subject200KDataset, CartoonDataset
 from .model import OminiModel
 from .callbacks import TrainingCallback
 
@@ -110,6 +106,7 @@ def main():
             condition_type=training_config["condition_type"],
             drop_text_prob=training_config["dataset"]["drop_text_prob"],
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
+            position_scale=training_config["dataset"].get("position_scale", 1.0),
         )
     elif training_config["dataset"]["type"] == "cartoon":
         dataset = load_dataset("saquiboye/oye-cartoon", split="train")
