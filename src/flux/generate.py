@@ -269,7 +269,7 @@ def generate(
                     return_dict=False,
                 )[0]
 
-                noise_pred = unc_pred - image_guidance_scale * (noise_pred - unc_pred)
+                noise_pred = unc_pred + image_guidance_scale * (noise_pred - unc_pred)
 
             # compute the previous noisy sample x_t -> x_t-1
             latents_dtype = latents.dtype
