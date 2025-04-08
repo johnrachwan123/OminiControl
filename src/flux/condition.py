@@ -94,7 +94,9 @@ class Condition(object):
         """
         return condition_dict[condition_type]
 
-    def encode(self, pipe: FluxPipeline) -> Tuple[torch.Tensor, torch.Tensor, int]:
+    def encode(
+        self, pipe: FluxPipeline, empty: bool = False
+    ) -> Tuple[torch.Tensor, torch.Tensor, int]:
         """
         Encodes the condition into tokens, ids and type_id.
         """
@@ -109,6 +111,13 @@ class Condition(object):
             "sr",
             "cartoon",
         ]:
+            if empty:
+                # make the condition black
+                e_condition = Image.new("RGB", self.condition.size, (0, 0, 0))
+                e_condition = e_condition.convert("RGB")
+                tokens, ids = encode_images(pipe, e_condition)
+            else:
+                tokens, ids = encode_images(pipe, self.condition)
             tokens, ids = encode_images(pipe, self.condition)
         else:
             raise NotImplementedError(
